@@ -1,0 +1,48 @@
+name: Test docs
+
+on:
+  pull_request:
+    paths:
+      - '**/*' # Trigger for all file changes
+
+jobs:
+  run-test-js:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Fetch all changed files
+        id: files
+        uses: lots0logs/gh-action-get-changed-files@2.1.4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check for test.js and run
+        run: |
+          #!/bin/bash
+          set -eo pipefail
+          FILES="${{ steps.files.outputs.all }}"
+          echo "Changed files: $FILES"
+
+          # Convert string to array
+          IFS=' ' read -r -a FILE_ARRAY <<< "$FILES"
+
+          RUN_DIRECTORIES=()
+
+          for file in "${FILE_ARRAY[@]}"; do
+            DIRECTORY=$(dirname "$file")
+            if find "$DIRECTORY" -name test.js | grep -q .; then
+              if [[ ! " ${RUN_DIRECTORIES[@]} " =~ " ${DIRECTORY} " ]]; then
+                echo "Found test.js in or under $DIRECTORY. Running tests..."
+                (npm i && cd "$DIRECTORY" && node test.js)
+                RUN_DIRECTORIES+=("$DIRECTORY")
+              fi
+            fi
+          done
+
+          if [ ${#RUN_DIRECTORIES[@]} -eq 0 ]; then
+            echo "No test.js found in changed directories."
+            exit 0
+          fi
+        shell: bash
