@@ -47,7 +47,7 @@ jobs:
               if [[ ! " ${RUN_DIRECTORIES[*]} " =~ " ${TEST_DIR} " ]]; then
                 # Run test.js
                 echo "Running test.js in $TEST_DIR"
-                (cd $TEST_DIR && node test.js)
+                (cd $TEST_DIR && node --trace-uncaught test.js)
                 # Mark this directory as processed
                 RUN_DIRECTORIES+=("$TEST_DIR")
               fi
