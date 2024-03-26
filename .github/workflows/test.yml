@@ -17,10 +17,10 @@ jobs:
 
       - name: Install jq
         run: sudo apt-get install jq
-        
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 21
 
       - name: Install dependencies
         run: npm i
@@ -48,7 +48,7 @@ jobs:
               if [[ ! " ${RUN_DIRECTORIES[*]} " =~ " ${TEST_DIR} " ]]; then
                 # Run test.js
                 echo "Running test.js in $TEST_DIR"
-                (cd "$TEST_DIR" && node test.js)
+                (npm i && cd "$TEST_DIR" && node test.js)
                 # Mark this directory as processed
                 RUN_DIRECTORIES+=("$TEST_DIR")
               fi
