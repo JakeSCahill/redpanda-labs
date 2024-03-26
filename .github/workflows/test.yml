@@ -17,9 +17,6 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install jq
-        run: brew install jq
-
       - uses: actions/setup-node@v4
         with:
           node-version: 21
@@ -50,8 +47,7 @@ jobs:
               if [[ ! " ${RUN_DIRECTORIES[*]} " =~ " ${TEST_DIR} " ]]; then
                 # Run test.js
                 echo "Running test.js in $TEST_DIR"
-                ls
-                (cd "$TEST_DIR" && node test.js)
+                (cd $TEST_DIR && node test.js)
                 # Mark this directory as processed
                 RUN_DIRECTORIES+=("$TEST_DIR")
               fi
