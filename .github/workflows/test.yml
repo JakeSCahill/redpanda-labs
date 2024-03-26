@@ -1,4 +1,4 @@
-name: Run test.js for Changed Directories
+name: Run doc tests
 
 on: pull_request
 
@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get changed files
         id: get-changed-files
@@ -48,7 +50,8 @@ jobs:
               if [[ ! " ${RUN_DIRECTORIES[*]} " =~ " ${TEST_DIR} " ]]; then
                 # Run test.js
                 echo "Running test.js in $TEST_DIR"
-                (npm run test)
+                ls
+                (cd "$TEST_DIR" && node test.js)
                 # Mark this directory as processed
                 RUN_DIRECTORIES+=("$TEST_DIR")
               fi
