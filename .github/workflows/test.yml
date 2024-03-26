@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: npm i
 
-      - name: Install latest rpk
+      - name: Install tools
         run: |
           #!/bin/bash
           set -e
@@ -37,7 +37,7 @@ jobs:
           curl -LO "${URL_BASE}/latest/download/${FILENAME}"
 
           # Ensure the unzip command is available
-          sudo apt-get update && sudo apt-get install -y unzip
+          sudo apt-get update && sudo apt-get install -y unzip && sudo apt-get install expect -y && sudo apt-get install jq -y
 
           # Unzip the rpk binary to the target directory
           unzip -o "${FILENAME}" -d $HOME/.local/bin

@@ -91,4 +91,3 @@ expect eof
 EOF
 
 echo "Script completed."
-exit 0
