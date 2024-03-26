@@ -75,8 +75,6 @@ expect <<EOF
 # Launch your command
 spawn rpk topic produce src
 
-expect ""
-
 # Send the prepared JSON message as input
 send -- [exec echo "$PROCESSED_JSON" | base64 --decode]\r
 
