@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 
 # Function to check if expect and jq are installed and install them if they're not
 ensure_dependencies_installed() {
