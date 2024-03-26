@@ -27,4 +27,34 @@ jobs:
       - name: Run test.js if present
         run: |
           #!/bin/bash
-          cd data-transforms/flatten && node test.js
+          set -e
+
+          # Use jq to read the list of modified files
+          MODIFIED_FILES=$(jq -r '.[]' ${HOME}/files_modified.json)
+          cat $MODIFIED_FILES
+
+          echo "Modified files: ${MODIFIED_FILES}"
+
+          # Track directories where test.js has been run to avoid duplicate runs
+          RUN_DIRECTORIES=()
+
+          for file in ${MODIFIED_FILES}; do
+            DIRECTORY=$(dirname "$file")
+
+            # Check both the changed file's directory and child directories for test.js
+            if find "$DIRECTORY" -name "test.js" -exec dirname {} \; | grep -q .; then
+              TEST_DIR=$(dirname "$file")
+              # Check if test.js has already been run for this directory
+              if [[ ! " ${RUN_DIRECTORIES[*]} " =~ " ${TEST_DIR} " ]]; then
+                # Run test.js
+                echo "Running test.js in $TEST_DIR"
+                (cd $TEST_DIR && node test.js)
+                # Mark this directory as processed
+                RUN_DIRECTORIES+=("$TEST_DIR")
+              fi
+            fi
+          done
+
+          if [ ${#RUN_DIRECTORIES[@]} -eq 0 ]; then
+            echo "No test.js found in changed directories."
+          fi
