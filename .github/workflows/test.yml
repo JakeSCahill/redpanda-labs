@@ -23,7 +23,7 @@ jobs:
           node-version: 21
 
       - name: Install dependencies
-        run: npm i
+        run: npm i && node ./node_modules/doc-detective-core/scripts/postinstall.js
 
       - name: Run test.js if present
         run: |
