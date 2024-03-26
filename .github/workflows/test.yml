@@ -48,7 +48,7 @@ jobs:
               if [[ ! " ${RUN_DIRECTORIES[*]} " =~ " ${TEST_DIR} " ]]; then
                 # Run test.js
                 echo "Running test.js in $TEST_DIR"
-                (npm i && cd "$TEST_DIR" && node test.js)
+                (npm run test)
                 # Mark this directory as processed
                 RUN_DIRECTORIES+=("$TEST_DIR")
               fi
