@@ -15,6 +15,8 @@ check_rpk_installed() {
 OS="$(uname -s)"
 ARCH="$(uname -m)"
 
+echo "$OS"
+
 # Check if rpk is already installed
 if check_rpk_installed; then
     exit 0

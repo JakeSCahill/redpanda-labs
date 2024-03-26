@@ -31,6 +31,10 @@
         {
           "action": "runShell",
           "command": "echo $REDPANDA_VERSION"
+        },
+        {
+          "action": "runShell",
+          "command": "echo $REDPANDA_CONSOLE_VERSION"
         }
       ]
     }
