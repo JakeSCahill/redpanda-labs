@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { runTests } = require("doc-detective-core");
 
-const configPath = 'doc-tests/test-config.json';
+const configPath = path.join(process.cwd(), 'doc-tests/test-config.json');
 const outputPath = path.join(process.cwd(), 'doc-tests/test_output.json');
 
 try {
