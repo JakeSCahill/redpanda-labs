@@ -56,11 +56,14 @@ if [ "${OS}" == "Linux" ]; then
     # Add the target directory to PATH in the current session
     export PATH=$PATH:~/.local/bin
 
-    # Unzip the rpk files to the target directory
-    unzip -o "${FILENAME}" -d ~/.local/bin/
+    # Unzip the rpk binary to the target directory
+    unzip -o "${FILENAME}" -d $HOME/.local/bin
 
     # Remove the downloaded archive
     rm "${FILENAME}"
+
+    # Add the target directory to PATH
+    echo "$HOME/.local/bin" >> $GITHUB_PATH
 
     # Verify installation
     echo "rpk has been installed. Version information:"
