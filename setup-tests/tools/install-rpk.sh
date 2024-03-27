@@ -15,8 +15,6 @@ check_rpk_installed() {
 OS="$(uname -s)"
 ARCH="$(uname -m)"
 
-echo "$OS"
-
 # Check if rpk is already installed
 if check_rpk_installed; then
     exit 0
@@ -51,10 +49,10 @@ if [ "${OS}" == "Linux" ]; then
     curl -LO "${URL_BASE}/latest/download/${FILENAME}"
 
     # Ensure the target directory exists
-    mkdir -p ~/.local/bin
+    mkdir -p $HOME/.local/bin
 
     # Add the target directory to PATH in the current session
-    export PATH=$PATH:~/.local/bin
+    export PATH=$PATH:$HOME/.local/bin
 
     # Unzip the rpk binary to the target directory
     unzip -o "${FILENAME}" -d $HOME/.local/bin
