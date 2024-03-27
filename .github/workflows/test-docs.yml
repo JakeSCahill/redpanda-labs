@@ -70,4 +70,4 @@ jobs:
 
       - name: Run tests for data-transforms if changed
         if: needs.setup.outputs.data-transforms-changed == 'true'
-        run: echo "Running tests for data-transforms" && node data-transforms/flatten/test.js
+        run: echo "Running tests for data-transforms" && cd data-transforms/flatten && node test.js

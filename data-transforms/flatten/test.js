@@ -38,8 +38,10 @@ try {
     .catch((error) => {
       console.error('Error running tests:', error);
       fs.writeFileSync(outputPath, `Error running tests: ${error}`);
+      process.exit(1)
     });
 } catch (error) {
   console.error('Failed to read config or run tests:', error);
   fs.writeFileSync(outputPath, `Failed to read config or run tests: ${error}`);
+  process.exit(1)
 }
