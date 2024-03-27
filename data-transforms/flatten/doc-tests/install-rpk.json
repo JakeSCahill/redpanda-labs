@@ -6,7 +6,7 @@
       "steps": [
         {
           "action": "runShell",
-          "command": "sh ../../../setup-tests/tools/install-rpk.sh"
+          "command": "bash ../../../setup-tests/tools/install-rpk.sh"
         }
       ]
     }
