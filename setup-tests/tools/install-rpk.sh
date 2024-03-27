@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Function to check rpk installation and display its version
 check_rpk_installed() {

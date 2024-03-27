@@ -40,6 +40,34 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install tools
+        run: |
+          #!/bin/bash
+          set -e
+
+          FILENAME="rpk-linux-amd64.zip"
+          URL_BASE="https://github.com/redpanda-data/redpanda/releases"
+
+          # Download the latest version of rpk
+          echo "Downloading ${FILENAME}..."
+          curl -LO "${URL_BASE}/latest/download/${FILENAME}"
+
+          # Ensure the unzip command is available
+          sudo apt-get update && sudo apt-get install -y unzip
+
+          # Unzip the rpk binary to the target directory
+          unzip -o "${FILENAME}" -d $HOME/.local/bin
+
+          # Remove the downloaded archive
+          rm "${FILENAME}"
+
+          # Add the target directory to PATH
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+          # Verify installation
+          echo "rpk has been installed. Version information:"
+          rpk version
+
       - name: Run tests for data-transforms if changed
         if: needs.setup.outputs.data-transforms-changed == 'true'
         run: echo "Running tests for data-transforms" && cd data-transforms/flatten && node test.js
